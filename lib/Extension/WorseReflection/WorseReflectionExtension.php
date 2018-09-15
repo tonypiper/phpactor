@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\WorseReflection;
 
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
-use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Bridge\PsrLog\PsrLogger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\Bridge\Phpactor\ClassToFileSourceLocator;
