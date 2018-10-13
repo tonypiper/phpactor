@@ -71,39 +71,5 @@ class CompletionHandler implements Handler
         }
 
         yield $completionList;
-
-        $diagnostics = $this->resolveDiagnostics($textDocument, $position);
-
-        yield new NotificationMessage('textDocument/publishDiagnostics', [
-            'uri' => $textDocument->uri,
-            'diagnostics' => $diagnostics 
-        ]);
-    }
-
-    private function resolveDiagnostics(TextDocumentItem $textDocument, Position $position)
-    {
-        $reflectionOffset = $this->reflector->reflectOffset(
-            substr($textDocument->text, 0, $position->toOffset($textDocument->text)),
-            $position->toOffset($textDocument->text)
-        );
-        
-        $issues = $reflectionOffset->symbolContext()->issues();
-        $diagnostics = [];
-        $position = $reflectionOffset->symbolContext()->symbol()->position();
-
-        if ($issues) {
-            $diagnostics[] = new Diagnostic(
-                implode(', ', $issues),
-                new Range(
-                    OffsetHelper::offsetToPosition($textDocument->text, $position->start()),
-                    OffsetHelper::offsetToPosition($textDocument->text, $position->end())
-                ),
-                null,
-                DiagnosticSeverity::WARNING,
-                'phpactor'
-            );
-        }
-
-        return $diagnostics;
     }
 }
